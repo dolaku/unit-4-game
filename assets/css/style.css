@@ -7,12 +7,11 @@ body {
     margin-bottom: 1rem;
 }
 #charWrapper {
-    flex-wrap: wrap;
     max-width: 550px;
-    position: relative;
-        left: -2%;
 }
-.charGroup {
+.charGroup,
+.charGroup-hero,
+.charGroup-villain {
     position: relative;
 }
 .character {
@@ -23,15 +22,27 @@ body {
     transition: .2s;
     width: auto;
 }
-.character:hover {
+.selection:hover {
+    background-color: #daffff;
     box-shadow: inset 0 0 30px #afeeee;
     max-height: 210px;
-    background-color: #daffff;
     transition: .2s;
 }
-.character:active {
+.selection:active {
     box-shadow: inset 0 0 70px #209191;
     transition: .1s
+}
+.evil {
+    border: solid 5px #d87093;
+    box-shadow: 0 0 15px #d87093;
+}
+.evil:hover {
+    background-color: #ffc4d8;
+    box-shadow: inset 0 0 30px #d87093;
+    max-height: 210px;
+}
+.evil:active {
+    box-shadow: inset 0 0 70px #942a4e;
 }
 .hpBadge {
     clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
@@ -43,6 +54,20 @@ body {
     position: absolute;
         right: 21px;
         top: 40px;
+}
+.hpBadge-hero {
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+    background-image: radial-gradient(#209191 , #afeeee 200%);
+    border-radius: 5px;
+    height: 70px;
+    width: 50px;
+    position: absolute;
+        right: 21px;
+        top: 40px;
+}
+.hpBadge-evil {
+    background-image: radial-gradient(#942a4e , #d87093 200%);
 }
 .hp-text,
 .hp-digit {
@@ -62,19 +87,22 @@ body {
         margin: 25px;
         max-height: 140px;
     }
-    .character:hover {
+    .selection:hover,
+    .evil:hover {
         max-height: 170px;
     }
-    .hpBadge {
+    .hpBadge,
+    .hpBadge-hero,
+    .hpBadge-evil {
         height: 55px;
         width: 45px;
         right: 9px;
         top: 23px;
     }
-    .hpBadge .hp-text {
+    .hp-text {
         font-size: 1.3rem !important;
     }
-    .hpBadge .hp-digit {
+    .hp-digit {
         font-size: 1rem !important;
     }
 }
@@ -86,10 +114,13 @@ body {
         margin: 15px;
         max-height: 130px;
     }
-    .character:hover {
+    .selection:hover,
+    .evil:hover {
         max-height: 150px;
     }
-    .hpBadge {
+    .hpBadge,
+    .hpBadge-hero,
+    .hpBadge-evil {
         right: -3px;
         top: 5px;
     }

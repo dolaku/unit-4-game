@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    var hero = false;
+    var villain = false;
 
     var game = {
         character: [
@@ -24,13 +26,39 @@ $(document).ready(function () {
                 counterAttack: 10
             }
         ],
-        selectCharacter: function () {
+        selectHero: function () {
             $('.charGroup').on('click', function () {
-                $(this).appendTo('#hero');
+                //moves hero to bottom of screen && removes hover effects
+                $(this).appendTo('#hero').addClass('heroPlayer');
+                $(this).find('img').removeClass('selection');
+                $(this).find('.hpBadge').addClass('hpBadge-hero').removeClass('hpBadge');
+                $(this).addClass('charGroup-hero').removeClass('charGroup');
+
+                //setup opponent selection
+                $('#topText').html('Choose Your <span class="text-danger">Opponent');
+                // $('#charWrapper').removeClass('flex-wrap');
+                $('.selection').addClass('evil').removeClass('selection');
+                $('.hpBadge').addClass('hpBadge-evil');
+
                 
+                hero = true;
+            });
+        },
+        selectVillain: function () {
+            $('.charGroup').on('click', function () {
+                $(this).removeClass('charGroup').addClass('charGroup-villain');
+                $(this).appendTo('#villain').addClass('villainPlayer');
+
+                $('.charGroup')
             });
         }
     }
 
-    game.selectCharacter();
+
+    if ( !hero ) {
+        game.selectHero();
+    }
+    if ( hero && !villain ) {
+        game.selectVillain();
+    }
 });

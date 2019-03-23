@@ -18,11 +18,11 @@
     <div class="container pt-4 pb-4 h-100">
         <div class="row h-100">
             <div class="col-md-12 d-flex flex-column" id="chooseChar">
-                <h1 class="text-center" id="topText">Choose Your Character</h2>
-                <div class="d-flex justify-content-center mx-auto" id="charWrapper">
+                <h1 class="text-center" id="topText">Choose Your <span class="text-info">Character</span></h2>
+                <div class="d-flex flex-wrap justify-content-center mb-auto" id="charWrapper">
                     
                     <div class="charGroup text-center" id="iceIcream">
-                        <img class="character rounded-circle" src="./assets/images/ice-cream.png"></img>
+                        <img class="character selection rounded-circle" src="./assets/images/ice-cream.png"></img>
                         <div class="hpBadge">
                             <h3 class="hp-text">HP</h3>
                             <h5 class="hp-digit">100</h5>
@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="charGroup text-center" id="apple">
-                        <img class="character rounded-circle" src="./assets/images/apple.png"></img>
+                        <img class="character selection rounded-circle" src="./assets/images/apple.png"></img>
                         <div class="hpBadge">
                             <h3 class="hp-text">HP</h3>
                             <h5 class="hp-digit">140</h5>
@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="charGroup text-center" id="burger">
-                        <img class="character rounded-circle" src="./assets/images/burger.png"></img>
+                        <img class="character selection rounded-circle" src="./assets/images/burger.png"></img>
                         <div class="hpBadge">
                             <h3 class="hp-text">HP</h3>
                             <h5 class="hp-digit">120</h5>
@@ -46,7 +46,7 @@
                     </div>
 
                     <div class="charGroup text-center" id="avocado">          
-                        <img class="character rounded-circle" src="./assets/images/avocado.png"></img>
+                        <img class="character selection rounded-circle" src="./assets/images/avocado.png"></img>
                         <div class="hpBadge">
                             <h3 class="hp-text">HP</h3>
                             <h5 class="hp-digit">180</h5>
@@ -55,7 +55,11 @@
 
                 </div><!--#char-wrapper-->
 
-                <div class="d-flex justify-content-between" id="hero">
+                <div class="d-flex justify-content-center" id="villain">
+                    <div id="counterAttack"></div>
+                </div>
+
+                <div class="d-flex justify-content-center" id="hero">
                     <div id="attack"></div>
                 </div>
 
