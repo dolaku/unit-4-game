@@ -1,12 +1,16 @@
+body {
+    height: 100vh;
+}
 #topText {
     font-family: 'Gochi Hand', Helvetica, sans-serif;
     font-size: 3rem;
     margin-bottom: 1rem;
 }
-#char-wrapper {
+#charWrapper {
+    flex-wrap: wrap;
     max-width: 550px;
     position: relative;
-        left: -1%;
+        left: -2%;
 }
 .charGroup {
     position: relative;
@@ -19,7 +23,6 @@
     transition: .2s;
     width: auto;
 }
-
 .character:hover {
     box-shadow: inset 0 0 30px #afeeee;
     max-height: 210px;
@@ -48,8 +51,11 @@
     margin: 0;
 }
 
+
+
+
 @media only screen and (max-width: 770px) {
-    #char-wrapper {
+    #charWrapper {
         max-width: unset;
     }
     .character {
@@ -74,7 +80,7 @@
 }
 @media only screen and (max-width: 450px) {
     #topText {
-        font-size: 2.25rem;
+        font-size: 2.5rem;
     }
     .character {
         margin: 15px;
