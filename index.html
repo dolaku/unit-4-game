@@ -18,36 +18,36 @@
     <div class="container pt-4 pb-4 h-100">
         <div class="row h-100">
             <div class="col-md-12 d-flex flex-column" id="chooseChar">
-                <h1 class="text-center" id="topText">Choose Your <span class="text-info">Character</span></h2>
-                <div class="d-flex flex-wrap justify-content-center mb-auto" id="charWrapper">
+                <h1 class="text-center" id="top-text">Choose Your <span class="text-info">Character</span></h2>
+                <div class="d-flex flex-wrap justify-content-center mx-auto mb-auto" id="char-wrapper">
                     
-                    <div class="charGroup text-center" id="iceIcream">
+                    <div class="char-group text-center" id="ice-cream">
                         <img class="character selection rounded-circle" src="./assets/images/ice-cream.png"></img>
-                        <div class="hpBadge">
+                        <div class="hp-badge">
                             <h3 class="hp-text">HP</h3>
                             <h5 class="hp-digit">100</h5>
                         </div>
                     </div>
 
-                    <div class="charGroup text-center" id="apple">
+                    <div class="char-group text-center" id="apple">
                         <img class="character selection rounded-circle" src="./assets/images/apple.png"></img>
-                        <div class="hpBadge">
+                        <div class="hp-badge">
                             <h3 class="hp-text">HP</h3>
                             <h5 class="hp-digit">140</h5>
                         </div>
                     </div>
 
-                    <div class="charGroup text-center" id="burger">
+                    <div class="char-group text-center" id="burger">
                         <img class="character selection rounded-circle" src="./assets/images/burger.png"></img>
-                        <div class="hpBadge">
+                        <div class="hp-badge">
                             <h3 class="hp-text">HP</h3>
                             <h5 class="hp-digit">120</h5>
                         </div>
                     </div>
 
-                    <div class="charGroup text-center" id="avocado">          
+                    <div class="char-group text-center" id="avocado">          
                         <img class="character selection rounded-circle" src="./assets/images/avocado.png"></img>
-                        <div class="hpBadge">
+                        <div class="hp-badge">
                             <h3 class="hp-text">HP</h3>
                             <h5 class="hp-digit">180</h5>
                         </div>
@@ -55,12 +55,14 @@
 
                 </div><!--#char-wrapper-->
 
-                <div class="d-flex justify-content-center" id="villain">
-                    <div id="counterAttack"></div>
+                <div id="villain" class="d-flex justify-content-center">
+                    <div id="your-villain" class="villain-notes"></div>
+                    <div id="counter-attack" class="villain-notes"></div>
                 </div>
 
-                <div class="d-flex justify-content-center" id="hero">
-                    <div id="attack"></div>
+                <div id="hero" class="d-flex justify-content-center text-center">
+                    <div id="your-hero" class="hero-notes"></div>
+                    <div id="attack" class="hero-notes"></div>
                 </div>
 
             </div><!--#chooseChar-->
@@ -80,7 +82,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-        <script src="./assets/javascript/game.js"></script>
+    <script src="./assets/javascript/game.js"></script>
 </body>
 
 </html>

@@ -1,17 +1,17 @@
 body {
     height: 100vh;
 }
-#topText {
+#top-text {
     font-family: 'Gochi Hand', Helvetica, sans-serif;
     font-size: 3rem;
     margin-bottom: 1rem;
 }
-#charWrapper {
+#char-wrapper {
     max-width: 550px;
 }
-.charGroup,
-.charGroup-hero,
-.charGroup-villain {
+.char-group,
+.char-group-hero,
+.char-group-villain {
     position: relative;
 }
 .character {
@@ -44,7 +44,7 @@ body {
 .evil:active {
     box-shadow: inset 0 0 70px #942a4e;
 }
-.hpBadge {
+.hp-badge {
     clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
     -webkit-clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
     background-image: radial-gradient(#209191 , #afeeee 200%);
@@ -55,7 +55,7 @@ body {
         right: 21px;
         top: 40px;
 }
-.hpBadge-hero {
+.hp-badge-hero {
     clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
     -webkit-clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
     background-image: radial-gradient(#209191 , #afeeee 200%);
@@ -66,7 +66,7 @@ body {
         right: 21px;
         top: 40px;
 }
-.hpBadge-evil {
+.hp-badge-evil {
     background-image: radial-gradient(#942a4e , #d87093 200%);
 }
 .hp-text,
@@ -75,12 +75,16 @@ body {
     font-family: 'Permanent Marker', Helvetica, sans-serif;
     margin: 0;
 }
-
+.hero-notes {
+    color: #209191;
+    font-family: 'Gochi Hand', Helvetica, sans-serif;
+    font-size: 2rem;
+}
 
 
 
 @media only screen and (max-width: 770px) {
-    #charWrapper {
+    #char-wrapper {
         max-width: unset;
     }
     .character {
@@ -91,9 +95,9 @@ body {
     .evil:hover {
         max-height: 170px;
     }
-    .hpBadge,
-    .hpBadge-hero,
-    .hpBadge-evil {
+    .hp-badge,
+    .hp-badge-hero,
+    .hp-badge-evil {
         height: 55px;
         width: 45px;
         right: 9px;
@@ -107,7 +111,7 @@ body {
     }
 }
 @media only screen and (max-width: 450px) {
-    #topText {
+    #top-text {
         font-size: 2.5rem;
     }
     .character {
@@ -118,9 +122,9 @@ body {
     .evil:hover {
         max-height: 150px;
     }
-    .hpBadge,
-    .hpBadge-hero,
-    .hpBadge-evil {
+    .hp-badge,
+    .hp-badge-hero,
+    .hp-badge-evil {
         right: -3px;
         top: 5px;
     }
