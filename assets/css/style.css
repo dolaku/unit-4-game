@@ -1,22 +1,90 @@
+#topText {
+    font-family: 'Gochi Hand', Helvetica, sans-serif;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
 #char-wrapper {
     max-width: 550px;
+    position: relative;
+        left: -1%;
+}
+.charGroup {
+    position: relative;
 }
 .character {
-    border: solid 5px palevioletred;
-    box-shadow: 0 0 15px palevioletred;
-    max-height: 200px;
+    border: solid 5px #afeeee;
+    box-shadow: 0 0 15px #afeeee;
+    margin: 40px;
+    max-height: 180px;
     transition: .2s;
     width: auto;
 }
+
 .character:hover {
-    box-shadow: inset 0 0 30px palevioletred;
-    max-height: 230px;
-    background-color: #ffe7ef;
+    box-shadow: inset 0 0 30px #afeeee;
+    max-height: 210px;
+    background-color: #daffff;
     transition: .2s;
+}
+.character:active {
+    box-shadow: inset 0 0 70px #209191;
+    transition: .1s
+}
+.hpBadge {
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+    background-image: radial-gradient(#209191 , #afeeee 200%);
+    border-radius: 5px;
+    height: 70px;
+    width: 50px;
+    position: absolute;
+        right: 21px;
+        top: 40px;
+}
+.hp-text,
+.hp-digit {
+    color: #fff;
+    font-family: 'Permanent Marker', Helvetica, sans-serif;
+    margin: 0;
 }
 
 @media only screen and (max-width: 770px) {
     #char-wrapper {
         max-width: unset;
+    }
+    .character {
+        margin: 25px;
+        max-height: 140px;
+    }
+    .character:hover {
+        max-height: 170px;
+    }
+    .hpBadge {
+        height: 55px;
+        width: 45px;
+        right: 9px;
+        top: 23px;
+    }
+    .hpBadge .hp-text {
+        font-size: 1.3rem !important;
+    }
+    .hpBadge .hp-digit {
+        font-size: 1rem !important;
+    }
+}
+@media only screen and (max-width: 450px) {
+    #topText {
+        font-size: 2.25rem;
+    }
+    .character {
+        margin: 15px;
+        max-height: 130px;
+    }
+    .character:hover {
+        max-height: 150px;
+    }
+    .hpBadge {
+        right: -3px;
+        top: 5px;
     }
 }
