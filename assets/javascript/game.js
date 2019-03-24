@@ -158,11 +158,8 @@ $(document).ready(function () {
 
         });
         //    d. update HP
-        heroHP -= counterAttack;
+        heroHP -= counterAttack * attackCount;
         villainHP -= attackProgress * attackCount;
-        console.log(attackProgress);
-        // console.log('heroHP: '+ heroHP);
-        console.log('villHP: '+ villainHP);
         $('.hp-badge-hero').find('.hp-digit').html(heroHP);
         $('.villain').siblings().find('.hp-digit').html(villainHP);
     });
