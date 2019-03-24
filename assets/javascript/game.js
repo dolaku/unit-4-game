@@ -45,10 +45,15 @@ $(document).ready(function () {
         // Pick hero if one isn't already chosen
         if (!heroChosen) {
             // moves hero into Hero div && removes hover/active styles
-            $(this).appendTo('#hero').addClass('hero-player');
-            $(this).find('img').removeClass('selection');
-            $(this).find('.hp-badge').addClass('hp-badge-hero').removeClass('hp-badge');
-            $(this).addClass('char-group-hero').removeClass('char-group');
+            $(this).appendTo('#hero')
+                    .addClass('hero-player');
+            $(this).find('img')
+                    .removeClass('selection');
+            $(this).find('.hp-badge')
+                    .addClass('hp-badge-hero')
+                    .removeClass('hp-badge');
+            $(this).addClass('char-group-hero')
+                    .removeClass('char-group');
 
             // 2. Display Hero selection
             hero = $(this).attr('id');
@@ -63,8 +68,11 @@ $(document).ready(function () {
             //      a. enemies remain in selection div && turns red (evil)
             //      b. setup opponent selection
             $('#top-text').html('Choose Your <span class="text-danger">Opponent');
-            $('.selection').parent().addClass('char-group-evil');
-            $('.selection').addClass('evil').removeClass('selection');
+            $('.selection').parent()
+                    .addClass('char-group-evil');
+            $('.selection')
+                    .addClass('evil')
+                    .removeClass('selection');
             $('.hp-badge').addClass('hp-badge-evil');
 
             heroChosen = true;
@@ -73,10 +81,22 @@ $(document).ready(function () {
             // Pick opponent if one isn't already chosen AND hero is chosen
             // 4. Stage defender
             //      a. Villain moves to Defender
-            //      b. remaining enemies stay && shrink
-            $(this).removeClass('char-group').addClass('char-group-villain');
-            $(this).prependTo('#villain').addClass('villain-player');
-            $('.selection').removeClass('selection');
+            //      b. remove all hover effects
+            $('#top-text').html('');
+            $(this).removeClass('char-group')
+            .addClass('char-group-villain');
+            $(this).find('img')
+            .removeClass('evil')
+            .addClass('villain');
+            $(this).prependTo('#villain')
+            .addClass('villain-player');
+            
+            //      c. remaining enemies stay at top && shrink
+            $('.evil').addClass('dormant')
+                    .removeClass('evil');
+            $('.dormant').siblings()
+                    .css({'top': '-20%', 'right': '30%'});
+            $('#char-wrapper').removeClass('mb-auto');
 
             villain = $(this).attr('id');
             Object.keys(character).forEach(function (key) {
@@ -89,10 +109,6 @@ $(document).ready(function () {
             villainChosen = true;
         }
     });
-    // function
-    // $('.char-group-evil').on('click', function () {
-        // console.log('clicked on ' + $(this).attr('id'));
-    // });
 
 
 

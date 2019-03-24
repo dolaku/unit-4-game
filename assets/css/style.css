@@ -33,7 +33,8 @@ body {
     box-shadow: inset 0 0 70px #209191;
     transition: .1s
 }
-.evil {
+.evil,
+.villain {
     border: solid 5px #d87093;
     box-shadow: 0 0 15px #d87093;
 }
@@ -44,6 +45,11 @@ body {
 }
 .evil:active {
     box-shadow: inset 0 0 70px #942a4e;
+}
+.dormant {
+    border: solid 5px #d87093;
+    box-shadow: 0 0 15px #d87093;
+    max-height: 80px !important;
 }
 .hp-badge {
     clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
