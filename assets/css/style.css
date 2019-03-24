@@ -50,6 +50,8 @@ body {
     border: solid 5px #d87093;
     box-shadow: 0 0 15px #d87093;
     max-height: 80px !important;
+    transition: .75s;
+    transition-timing-function: ease-in-out;
 }
 .hp-badge {
     clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
@@ -94,7 +96,36 @@ body {
     font-size: 2rem;
     line-height: 1.2;
 }
-
+#btn-fight {
+    background-color: #209191;
+    border: solid 5px #43b3b3;
+    box-shadow: 0 0 15px #43b3b3;
+    color: #fff;
+    font-family: 'Permanent Marker', Helvetica, sans-serif;
+    font-size: 1.5rem;
+    height: 110px;
+    width: 110px
+}
+#btn-fight p {
+    position: relative;
+    top: 30px;
+}
+#btn-fight:hover {
+    border-radius: 50%;
+    box-shadow: inset 0 0 30px #afeeee;
+    cursor: default;
+    text-transform: uppercase;
+    max-height: 210px;
+    transition: .1s;
+    transition-timing-function: ease-in-out;
+}
+#btn-fight:active {
+    box-shadow: inset 0 0 70px #afeeee;
+    height: 105px;
+    transition: .05s;
+    transition-timing-function: ease-in-out;
+    width: 105px;
+}
 
 
 @media only screen and (max-width: 770px) {

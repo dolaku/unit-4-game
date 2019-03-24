@@ -30,7 +30,7 @@ $(document).ready(function () {
             name: 'Avocado',
             health: 180,
             attack: 8,
-            counterAttack: 10
+            counterAttack: 18
         }
     }
 
@@ -60,7 +60,7 @@ $(document).ready(function () {
             Object.keys(character).forEach(function (key) {
                 var value = character[key];
                 if (value.id === hero) {
-                    $('#your-hero').html('You\'re playing as<br><strong>' + value.name + '</strong>');
+                    $('#your-hero').html('You chose<br><strong>' + value.name + '</strong>');
                 }
             });
 
@@ -96,7 +96,8 @@ $(document).ready(function () {
                     .removeClass('evil');
             $('.dormant').siblings()
                     .css({'top': '-20%', 'right': '30%'});
-            $('#char-wrapper').removeClass('mb-auto');
+            $('#char-wrapper').removeClass('mb-auto')
+                    .css('opacity', '0.75');
 
             villain = $(this).attr('id');
             Object.keys(character).forEach(function (key) {
@@ -107,6 +108,9 @@ $(document).ready(function () {
             });
 
             villainChosen = true;
+            
+            // 5. Display attack button
+            $('#btn-fight').removeClass('d-none');
         }
     });
 
@@ -115,22 +119,18 @@ $(document).ready(function () {
 
 
 
+    // 6.  ATTACK
+    //     a. compare attack rating to defender rating
+    //     b. determine damage
+    //     c. update Attack results
+    //     d. update HP
+    //     e. check outcome
+    //     f. Update display
+    //         i. is attacker defeated
+    //             a. Game Over
+    //             b. Allow user to reset - display restart button
+    //         ii. is defender defeated
+    //             a. remove defender
+    //             b. allow new enemy selection - if there isn't on already selected
 
 });
-
-
-// 5. Display attack button
-// 6.  ATTACK
-//     a. compare attack rating to defender rating
-//     b. determine damage
-//     c. update Attack results
-//     d. update HP
-//     e. check outcome
-//     f. Update display
-//         i. is attacker defeated
-//             a. Game Over
-//             b. Allow user to reset - display restart button
-//         ii. is defender defeated
-//             a. remove defender
-//             b. allow new enemy selection - if there isn't on already selected
-
