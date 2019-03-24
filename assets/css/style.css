@@ -11,13 +11,14 @@ body {
 }
 .char-group,
 .char-group-hero,
+.char-group-evil,
 .char-group-villain {
     position: relative;
 }
 .character {
     border: solid 5px #afeeee;
     box-shadow: 0 0 15px #afeeee;
-    margin: 40px;
+    margin: 30px;
     max-height: 180px;
     transition: .2s;
     width: auto;
@@ -79,6 +80,13 @@ body {
     color: #209191;
     font-family: 'Gochi Hand', Helvetica, sans-serif;
     font-size: 2rem;
+    line-height: 1.2;
+}
+.villain-notes {
+    color: #942a4e;
+    font-family: 'Gochi Hand', Helvetica, sans-serif;
+    font-size: 2rem;
+    line-height: 1.2;
 }
 
 
@@ -127,5 +135,9 @@ body {
     .hp-badge-evil {
         right: -3px;
         top: 5px;
+    }
+    .hero-notes,
+    .villain-notes {
+        font-size: 1.25rem;
     }
 }

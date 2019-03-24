@@ -3,96 +3,97 @@ $(document).ready(function () {
     var heroChosen = false;
     var villainChosen = false;
 
-    var game = {
-        character: [
-            {
-                id: 'ice-cream',
-                name: 'Ice Cream',
-                health: 100,
-                attack: 10,
-                counterAttack: 20
-            }, {
-                id: 'apple',
-                name: 'Apple',
-                health: 140,
-                attack: 12,
-                counterAttack: 15
-            }, {
-                id: 'burger',
-                name: 'Burger',
-                health: 120,
-                attack: 6,
-                counterAttack: 5
-            }, {
-                id: 'avocado',
-                name: 'Avocado',
-                health: 180,
-                attack: 8,
-                counterAttack: 10
-            }
-        ]
+    var character = {
+        iceCream: {
+            id: 'iceCream',
+            name: 'Ice Cream',
+            health: 100,
+            attack: 10,
+            counterAttack: 20
+        },
+        apple: {
+            id: 'apple',
+            name: 'Apple',
+            health: 140,
+            attack: 12,
+            counterAttack: 15
+        },
+        burger: {
+            id: 'burger',
+            name: 'Burger',
+            health: 120,
+            attack: 6,
+            counterAttack: 5
+        },
+        avocado: {
+            id: 'avocado',
+            name: 'Avocado',
+            health: 180,
+            attack: 8,
+            counterAttack: 10
+        }
     }
 
-    /*
-    for (var i = 0; i <character.length[i]; i++)
-    
-    */
+    if (gameStart) {
 
-    // if (!gameStart) {
-    //     console.log('lets start');
-    //     if (!heroChosen) {
-    //         console.log('no hero selected yet');
-    //         selectHero();
-
-    //     }
-    // } else {
-    //     console.log('already in a game');
-    // }
-
-    // if (heroChosen && !villainChosen) {
-    //     selectVillain();
-    // }
+    }
 
     // ----- FUNCTIONALITY ----- 
-    
-    // 1. Display characters to Select -- created in HTML
-    $('.char-group').on('click', function (hero) {
+
+    // 1. Display characters to select Hero --- created in HTML
+    $('.char-group').on('click', function (hero, villain) {
         // Pick hero if one isn't already chosen
-        if ( !heroChosen ) {
-            //     moves hero into Hero div && removes hover effects
+        if (!heroChosen) {
+            // moves hero into Hero div && removes hover/active styles
             $(this).appendTo('#hero').addClass('hero-player');
             $(this).find('img').removeClass('selection');
             $(this).find('.hp-badge').addClass('hp-badge-hero').removeClass('hp-badge');
             $(this).addClass('char-group-hero').removeClass('char-group');
-        
+
+            // 2. Display Hero selection
             hero = $(this).attr('id');
-            $('#your-hero').html('You\'re playing as<br>' + hero.toUpperCase());
-        
-        // 2. Keep selection remove extras
-        // 3. Place extras in 'Enemies' section -- 
-        //      a. enemies remain in selection div && turns red
-        //      b. setup opponent selection
+            Object.keys(character).forEach(function (key) {
+                var value = character[key];
+                if (value.id === hero) {
+                    $('#your-hero').html('You\'re playing as<br><strong>' + value.name + '</strong>');
+                }
+            });
+
+            // 3. Display enemies
+            //      a. enemies remain in selection div && turns red (evil)
+            //      b. setup opponent selection
             $('#top-text').html('Choose Your <span class="text-danger">Opponent');
+            $('.selection').parent().addClass('char-group-evil');
             $('.selection').addClass('evil').removeClass('selection');
             $('.hp-badge').addClass('hp-badge-evil');
-        
+
             heroChosen = true;
-            console.log('hero selected: ' + $('#hero'));
-            console.log(heroChosen);
+
+        } else if (heroChosen && !villainChosen) {
+            // Pick opponent if one isn't already chosen AND hero is chosen
+            // 4. Stage defender
+            //      a. Villain moves to Defender
+            //      b. remaining enemies stay && shrink
+            $(this).removeClass('char-group').addClass('char-group-villain');
+            $(this).prependTo('#villain').addClass('villain-player');
+            $('.selection').removeClass('selection');
+
+            villain = $(this).attr('id');
+            Object.keys(character).forEach(function (key) {
+                var value = character[key];
+                if (value.id === villain) {
+                    $('#your-villain').html('Your opponent is<br><strong>' + value.name + '</strong>');
+                }
+            });
+
+            villainChosen = true;
         }
     });
+    // function
+    // $('.char-group-evil').on('click', function () {
+        // console.log('clicked on ' + $(this).attr('id'));
+    // });
 
-    $('.char-group').on('click', function (villain) {
-        if ( !villainChosen ) {
-
-        }
-    // 4. Stage defender
-    //      a. Villain moves to Defender
-    //      b. remaining enemies stay && shrink
-        // $('.char-group').removeClass('selection');
-        // $(this).removeClass('char-group').removeClass('evil').addClass('char-group-villain');
-        // $(this).appendTo('#villain').addClass('villain-player');
-    });
 
 
 
