@@ -84,13 +84,19 @@ $(document).ready(function () {
             $('.hp-badge').addClass('hp-badge-evil');
 
             heroChosen = true;
-
+            
         } else if (heroChosen && !villainChosen) {
-            console.log(heroChosen);
-            // Pick opponent if one isn't already chosen AND hero is chosen
-            // 4. Stage defender
-            //      a. Villain moves to Defender
-            //      b. remove all hover effects
+            // 4. Stage defenders
+            //      a. Pick opponent if one isn't already chosen AND hero is chosen
+            //      b. Hero character cannot be picked
+            $('.hero-player').on('click', function(event){
+                event.preventDefault();
+            });
+            console.log(this);
+            console.log($(this));
+
+            //      c. Villain moves to Defender
+            //      d. remove all hover effects
             $('#top-text').html('');
             $(this).removeClass('char-group')
                 .addClass('char-group-villain');
@@ -100,7 +106,7 @@ $(document).ready(function () {
             $(this).prependTo('#villain')
                 .addClass('villain-player');
 
-            //      c. remaining enemies stay at top && shrink
+            //      e. remaining enemies stay at top && shrink
             $('.evil').addClass('dormant')
                 .removeClass('evil');
             $('.dormant').siblings()

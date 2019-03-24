@@ -86,6 +86,9 @@ body {
     font-family: 'Permanent Marker', Helvetica, sans-serif;
     margin: 0;
 }
+.hero-player {
+    pointer-events: none;
+}
 .hero-notes {
     color: #209191;
     font-family: 'Gochi Hand', Helvetica, sans-serif;
