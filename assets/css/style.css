@@ -18,7 +18,7 @@ body {
 .character {
     border: solid 5px #afeeee;
     box-shadow: 0 0 15px #afeeee;
-    margin: 30px;
+    margin: 25px 30px;
     max-height: 180px;
     transition: .2s;
     width: auto;
@@ -26,6 +26,7 @@ body {
 .selection:hover {
     background-color: #daffff;
     box-shadow: inset 0 0 30px #afeeee;
+    margin: 0px 15px; 
     max-height: 210px;
     transition: .2s;
 }
@@ -41,6 +42,7 @@ body {
 .evil:hover {
     background-color: #ffc4d8;
     box-shadow: inset 0 0 30px #d87093;
+    margin: 0px 15px; 
     max-height: 210px;
 }
 .evil:active {
@@ -61,8 +63,8 @@ body {
     height: 70px;
     width: 50px;
     position: absolute;
-        right: 21px;
-        top: 40px;
+        right: 10px;
+        top: 30px;
 }
 .hp-badge-hero {
     clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
@@ -112,16 +114,22 @@ body {
 }
 #btn-fight:hover {
     border-radius: 50%;
-    box-shadow: inset 0 0 30px #afeeee;
+    box-shadow: inset 0 0 25px #afeeee;
     cursor: default;
+    text-shadow: 3px 3px 1px #333;
     text-transform: uppercase;
     max-height: 210px;
     transition: .1s;
     transition-timing-function: ease-in-out;
 }
 #btn-fight:active {
-    box-shadow: inset 0 0 70px #afeeee;
+    border: solid 5px #3e9e9e;
+    box-shadow: inset 0 0 60px #afeeee;
+    font-size: 1.4rem;
     height: 105px;
+    margin-top: 2px;
+    margin-bottom: 3px;
+    text-shadow: 1px 2px 1px #333;
     transition: .05s;
     transition-timing-function: ease-in-out;
     width: 105px;
@@ -133,11 +141,12 @@ body {
         max-width: unset;
     }
     .character {
-        margin: 25px;
+        margin: 20px 25px;
         max-height: 140px;
     }
     .selection:hover,
     .evil:hover {
+        margin: 0 10px;
         max-height: 170px;
     }
     .hp-badge,

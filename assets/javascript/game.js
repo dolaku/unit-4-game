@@ -2,6 +2,9 @@ $(document).ready(function () {
     var gameStart = false;
     var heroChosen = false;
     var villainChosen = false;
+    var heroName;
+    var villainName;
+    var attackCount = 0;
 
     var character = {
         iceCream: {
@@ -23,7 +26,7 @@ $(document).ready(function () {
             name: 'Burger',
             health: 120,
             attack: 6,
-            counterAttack: 5
+            counterAttack: 25
         },
         avocado: {
             id: 'avocado',
@@ -62,6 +65,7 @@ $(document).ready(function () {
                 if (value.id === hero) {
                     $('#your-hero').html('You chose<br><strong>' + value.name + '</strong>');
                 }
+                heroName = hero;
             });
 
             // 3. Display enemies
@@ -97,7 +101,7 @@ $(document).ready(function () {
             $('.dormant').siblings()
                     .css({'top': '-20%', 'right': '30%'});
             $('#char-wrapper').removeClass('mb-auto')
-                    .css('opacity', '0.75');
+                    .css('opacity', '0.85');
 
             villain = $(this).attr('id');
             Object.keys(character).forEach(function (key) {
@@ -105,6 +109,7 @@ $(document).ready(function () {
                 if (value.id === villain) {
                     $('#your-villain').html('Your opponent is<br><strong>' + value.name + '</strong>');
                 }
+                villainName = villain;
             });
 
             villainChosen = true;
@@ -114,16 +119,34 @@ $(document).ready(function () {
         }
     });
 
-
-
-
-
-
     // 6.  ATTACK
     //     a. compare attack rating to defender rating
     //     b. determine damage
-    //     c. update Attack results
+    $('#btn-fight').on('click', function(hero, villain, attack) {
+        Object.keys(character).forEach(function (key) {
+            hero = character[key];
+            villain = character[key];
+            if (hero.id === heroName) {
+                $('#your-hero').html('<strong>' + hero.name + '</strong>');
+    
+                //     c. update Attack results
+                attackCount++;
+                $('#attack').html('Attacks for <strong>'+ hero.attack * attackCount + '</strong> damage!');
+            }
+            
+            if (villain.id === villainName) {
+                $('#your-villain').html('<strong>' + villain.name + '</strong>');
+                $('#counter-attack').html('Attacks for <strong>'+ villain.counterAttack + '</strong> damage!');
+            }
+
     //     d. update HP
+            
+        });
+    });
+
+
+
+
     //     e. check outcome
     //     f. Update display
     //         i. is attacker defeated
