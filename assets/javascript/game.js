@@ -3,30 +3,34 @@ $(document).ready(function () {
     var heroChosen = false;
     var villainChosen = false;
     var heroName;
+    var heroHP;
     var villainName;
+    var villainHP;
     var attackCount = 0;
+    var attackProgress;
+    var counterAttack;
 
     var character = {
         iceCream: {
             id: 'iceCream',
             name: 'Ice Cream',
             health: 100,
-            attack: 10,
-            counterAttack: 20
-        },
-        apple: {
-            id: 'apple',
-            name: 'Apple',
-            health: 140,
             attack: 12,
-            counterAttack: 15
+            counterAttack: 20
         },
         burger: {
             id: 'burger',
             name: 'Burger',
             health: 120,
-            attack: 6,
+            attack: 10,
             counterAttack: 25
+        },
+        apple: {
+            id: 'apple',
+            name: 'Apple',
+            health: 140,
+            attack: 6,
+            counterAttack: 15
         },
         avocado: {
             id: 'avocado',
@@ -49,14 +53,14 @@ $(document).ready(function () {
         if (!heroChosen) {
             // moves hero into Hero div && removes hover/active styles
             $(this).appendTo('#hero')
-                    .addClass('hero-player');
+                .addClass('hero-player');
             $(this).find('img')
-                    .removeClass('selection');
+                .removeClass('selection');
             $(this).find('.hp-badge')
-                    .addClass('hp-badge-hero')
-                    .removeClass('hp-badge');
+                .addClass('hp-badge-hero')
+                .removeClass('hp-badge');
             $(this).addClass('char-group-hero')
-                    .removeClass('char-group');
+                .removeClass('char-group');
 
             // 2. Display Hero selection
             hero = $(this).attr('id');
@@ -73,35 +77,36 @@ $(document).ready(function () {
             //      b. setup opponent selection
             $('#top-text').html('Choose Your <span class="text-danger">Opponent');
             $('.selection').parent()
-                    .addClass('char-group-evil');
+                .addClass('char-group-evil');
             $('.selection')
-                    .addClass('evil')
-                    .removeClass('selection');
+                .addClass('evil')
+                .removeClass('selection');
             $('.hp-badge').addClass('hp-badge-evil');
 
             heroChosen = true;
 
         } else if (heroChosen && !villainChosen) {
+            console.log(heroChosen);
             // Pick opponent if one isn't already chosen AND hero is chosen
             // 4. Stage defender
             //      a. Villain moves to Defender
             //      b. remove all hover effects
             $('#top-text').html('');
             $(this).removeClass('char-group')
-            .addClass('char-group-villain');
+                .addClass('char-group-villain');
             $(this).find('img')
-            .removeClass('evil')
-            .addClass('villain');
+                .removeClass('evil')
+                .addClass('villain');
             $(this).prependTo('#villain')
-            .addClass('villain-player');
-            
+                .addClass('villain-player');
+
             //      c. remaining enemies stay at top && shrink
             $('.evil').addClass('dormant')
-                    .removeClass('evil');
+                .removeClass('evil');
             $('.dormant').siblings()
-                    .css({'top': '-20%', 'right': '30%'});
+                .css({ 'top': '-20%', 'right': '30%' });
             $('#char-wrapper').removeClass('mb-auto')
-                    .css('opacity', '0.85');
+                .css('opacity', '0.85');
 
             villain = $(this).attr('id');
             Object.keys(character).forEach(function (key) {
@@ -113,7 +118,7 @@ $(document).ready(function () {
             });
 
             villainChosen = true;
-            
+
             // 5. Display attack button
             $('#btn-fight').removeClass('d-none');
         }
@@ -122,26 +127,44 @@ $(document).ready(function () {
     // 6.  ATTACK
     //     a. compare attack rating to defender rating
     //     b. determine damage
-    $('#btn-fight').on('click', function(hero, villain, attack) {
+    $('#btn-fight').on('click', function (hero, villain) {
         Object.keys(character).forEach(function (key) {
             hero = character[key];
             villain = character[key];
             if (hero.id === heroName) {
-                $('#your-hero').html('<strong>' + hero.name + '</strong>');
-    
+                $('#your-hero').html('<strong>'
+                    + hero.name.toUpperCase()
+                    + '</strong>');
+
                 //     c. update Attack results
                 attackCount++;
-                $('#attack').html('Attacks for <strong>'+ hero.attack * attackCount + '</strong> damage!');
-            }
-            
-            if (villain.id === villainName) {
-                $('#your-villain').html('<strong>' + villain.name + '</strong>');
-                $('#counter-attack').html('Attacks for <strong>'+ villain.counterAttack + '</strong> damage!');
+                $('#attack').html('Attacks for <strong>'
+                    + hero.attack * attackCount
+                    + '</strong> damage!');
+                attackProgress = hero.attack * attackCount;
+                heroHP = hero.health;
             }
 
-    //     d. update HP
-            
+            if (villain.id === villainName) {
+                $('#your-villain').html('<strong>'
+                    + villain.name.toUpperCase()
+                    + '</strong>');
+                $('#counter-attack').html('Attacks for <strong>'
+                    + villain.counterAttack
+                    + '</strong> damage!');
+                counterAttack = villain.counterAttack;
+                villainHP = villain.health;
+            }
+
         });
+        //    d. update HP
+        heroHP -= counterAttack;
+        villainHP -= attackProgress * attackCount;
+        console.log(attackProgress);
+        // console.log('heroHP: '+ heroHP);
+        console.log('villHP: '+ villainHP);
+        $('.hp-badge-hero').find('.hp-digit').html(heroHP);
+        $('.villain').siblings().find('.hp-digit').html(villainHP);
     });
 
 
