@@ -55,6 +55,13 @@ body {
     transition: .75s;
     transition-timing-function: ease-in-out;
 }
+.defeated {
+    max-height: 80px !important;
+    opacity: .4;
+    pointer-events: none;
+    transition: .75s;
+    transition-timing-function: ease-in;
+}
 .hp-badge {
     clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
     -webkit-clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
@@ -79,6 +86,11 @@ body {
 }
 .hp-badge-evil {
     background-image: radial-gradient(#942a4e , #d87093 200%);
+}
+.hp-badge-defeated {
+    opacity: .8;
+    transition: .75s;
+    transition-timing-function: ease-in;
 }
 .hp-text,
 .hp-digit {

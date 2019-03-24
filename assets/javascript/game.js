@@ -4,6 +4,7 @@ $(document).ready(function () {
     var villainChosen = false;
     var heroName;
     var heroHP;
+    var enemiesRem = 3;
     var villainName;
     var villainHP;
     var attackCount = 0;
@@ -88,15 +89,8 @@ $(document).ready(function () {
         } else if (heroChosen && !villainChosen) {
             // 4. Stage defenders
             //      a. Pick opponent if one isn't already chosen AND hero is chosen
-            //      b. Hero character cannot be picked
-            $('.hero-player').on('click', function(event){
-                event.preventDefault();
-            });
-            console.log(this);
-            console.log($(this));
-
-            //      c. Villain moves to Defender
-            //      d. remove all hover effects
+            //      b. Villain moves to Defender
+            //      c. remove all hover effects
             $('#top-text').html('');
             $(this).removeClass('char-group')
                 .addClass('char-group-villain');
@@ -106,7 +100,7 @@ $(document).ready(function () {
             $(this).prependTo('#villain')
                 .addClass('villain-player');
 
-            //      e. remaining enemies stay at top && shrink
+            //      d. remaining enemies stay at top && shrink
             $('.evil').addClass('dormant')
                 .removeClass('evil');
             $('.dormant').siblings()
@@ -161,25 +155,66 @@ $(document).ready(function () {
                 counterAttack = villain.counterAttack;
                 villainHP = villain.health;
             }
-
         });
         //    d. update HP
         heroHP -= counterAttack * attackCount;
         villainHP -= attackProgress * attackCount;
-        $('.hp-badge-hero').find('.hp-digit').html(heroHP);
-        $('.villain').siblings().find('.hp-digit').html(villainHP);
+        $('.hp-badge-hero').find('.hp-digit')
+            .html(heroHP);
+        $('.villain').siblings().find('.hp-digit')
+            .html(villainHP);
+        
+        checkHP();
     });
-
-
-
-
-    //     e. check outcome
+    //     e. check HP levels
     //     f. Update display
-    //         i. is attacker defeated
+    function checkHP() {
+        if (heroHP <= 0) {
+    //         i. attacker defeated
     //             a. Game Over
     //             b. Allow user to reset - display restart button
-    //         ii. is defender defeated
-    //             a. remove defender
-    //             b. allow new enemy selection - if there isn't on already selected
+            $('#top-text').html('You have been defeated by ' + villainName.toUpperCase());
 
+            restart();
+    
+        } else if (villainHP <=0) {
+    //         ii. defender is defeated
+            enemiesRem--;        
+            if (enemiesRem === 0) {
+                // defeated everyone!
+                $('#top-text').html('<span class="text-info">You win!</span>');
+
+            } else {
+                // hide attack button
+                $('#btn-fight').addClass('d-none');
+
+                $('#counter-attack').html('has been defeated');
+                $('#top-text').html('Choose Your Next <span class="text-danger">Opponent');
+    
+    //             a. remove defeated defender
+                $('.villain').siblings()
+                    .addClass('hp-badge-defeated');
+                $('.villain')
+                    .addClass('defeated')
+                    .addClass('evil')
+                    .removeClass('villain');
+    
+    //             b. allow new enemy selection
+                chooseNext();
+            }
+
+        }
+    }
+    function chooseNext() {
+        $('#char-wrapper').css('opacity', '1');
+        $('.dormant').addClass('evil')
+            .removeClass('dormant');
+        $('#char-wrapper').find('.hp-badge-evil')
+            .css({'top': '30px', 'right': '10px'});
+
+    }
+
+    function restart() {
+        $('#top-text').html('Restart?');
+    }
 });
