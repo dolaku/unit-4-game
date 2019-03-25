@@ -88,13 +88,7 @@ $(document).ready(function () {
             var that = this;
             villainSet(that);
 
-            // Remaining enemies stay at top && shrink
-            $('.evil').addClass('dormant')
-                .removeClass('evil');
-            $('.dormant').siblings()
-                .css({ 'top': '-20%', 'right': '30%' });
-            $('#char-wrapper').removeClass('mb-auto')
-                .css('opacity', '0.85');
+            dormantSet()
 
             villain = $(this).attr('id');
             Object.keys(character).forEach(function (key) {
@@ -161,8 +155,7 @@ $(document).ready(function () {
     function checkHP() {
         if (heroHP <= 0) {
             // Attacker defeated
-            // Game Over
-            // Allow user to reset - display restart button
+            // Game Over && restart option
             $('#top-text').html('You have been defeated by ' + villainName.toUpperCase());
 
             restart();
@@ -173,7 +166,11 @@ $(document).ready(function () {
             if (enemiesRem === 0) {
                 // Defeated everyone!!
                 $('#top-text').html('<span class="text-info">You win!</span>');
-                // Allow user to reset - display restart button
+                removeDefeated()
+
+                restart();
+
+
 
             } else {
                 // Hide attack button
@@ -182,14 +179,7 @@ $(document).ready(function () {
                 $('#counter-attack').html('has been defeated');
                 $('#top-text').html('Choose Your Next <span class="text-danger">Opponent');
 
-                // Remove defeated defender
-                $('.villain').siblings()
-                    .addClass('hp-badge-defeated');
-                $('.villain')
-                    .addClass('defeated')
-                    .addClass('evil')
-                    .removeClass('villain');
-                $('.villain-player').removeClass('char-group-evil');
+                removeDefeated()
 
                 chooseNext();
             }
@@ -207,6 +197,16 @@ $(document).ready(function () {
             .addClass('villain');
         $(that).prependTo('#villain')
             .addClass('villain-player');
+    }
+
+    function dormantSet() {
+        // Remaining enemies stay at top && shrink
+        $('.evil').addClass('dormant')
+        .removeClass('evil');
+        $('.dormant').siblings()
+            .css({ 'top': '-20%', 'right': '30%' });
+        $('#char-wrapper').removeClass('mb-auto')
+            .css('opacity', '0.85');
     }
 
     function chooseNext() {
@@ -249,7 +249,18 @@ $(document).ready(function () {
         });
     } // End ----- chooseNext()
 
+    function removeDefeated() {
+        // Remove defeated defender
+        $('.villain').siblings()
+            .addClass('hp-badge-defeated');
+        $('.villain')
+            .addClass('defeated')
+            .addClass('evil')
+            .removeClass('villain');
+        $('.villain-player').removeClass('char-group-evil');
+    }
+
     function restart() {
-        $('#top-text').html('Restart?');
+        // $('#top-text').html('Restart?');
     }
 });
