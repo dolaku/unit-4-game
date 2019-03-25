@@ -144,6 +144,7 @@ $(document).ready(function () {
                 villainHP = villain.health;
             }
         });
+
         // Update HP
         heroHP -= counterAttack * attackCount;
         villainHP -= attackProgress * attackCount;
@@ -153,7 +154,8 @@ $(document).ready(function () {
             .html(villainHP);
 
         checkHP();
-    });
+    }); // End ----- #btn-fight 'click'
+
     // Check HP levels
     // Update display
     function checkHP() {
@@ -191,9 +193,9 @@ $(document).ready(function () {
 
                 chooseNext();
             }
-
         }
-    }
+    } // End ----- checkHP()
+
     function villainSet(that) {
         // Villain moves to Defender
         // Remove all hover effects
@@ -221,27 +223,31 @@ $(document).ready(function () {
             $('#char-wrapper').prepend('<div id="graveyard"></div>');
             $('.villain-player').prependTo('#graveyard')
                 .removeClass('villain-player');
+            $('.defeated').siblings().find('.hp-digit')
+                .html('X');
 
             var that = this;
             villainSet(that);
 
-            // Store Villain info
+            // Store new Villain info
+            // Reset villainHP
             villain = $(this).attr('id');
             Object.keys(character).forEach(function (key) {
                 var value = character[key];
                 if (value.id === villain) {
                     $('#your-villain').html('Your opponent is<br><strong>' + value.name + '</strong>');
                     $('#counter-attack').html('');
+                    villainHP = value.health;
                 }
-                villainName = villain;
             });
 
+            villainName = villain;
             villainChosen = true;
 
             // Display attack button
             $('#btn-fight').removeClass('d-none');
         });
-    }
+    } // End ----- chooseNext()
 
     function restart() {
         $('#top-text').html('Restart?');
