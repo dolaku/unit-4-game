@@ -42,17 +42,12 @@ $(document).ready(function () {
         }
     }
 
-    if (gameStart) {
+    // ----- FUNCTIONALITY -----
 
-    }
-
-    // ----- FUNCTIONALITY ----- 
-
-    // 1. Display characters to select Hero --- created in HTML
+    // Pick hero if one isn't already chosen
+    // Moves hero into Hero div && removes hover/active styles
     $('.char-group').on('click', function (hero, villain) {
-        // Pick hero if one isn't already chosen
         if (!heroChosen) {
-            // moves hero into Hero div && removes hover/active styles
             $(this).appendTo('#hero')
                 .addClass('hero-player');
             $(this).find('img')
@@ -63,7 +58,7 @@ $(document).ready(function () {
             $(this).addClass('char-group-hero')
                 .removeClass('char-group');
 
-            // 2. Display Hero selection
+            // Store Hero selection
             hero = $(this).attr('id');
             Object.keys(character).forEach(function (key) {
                 var value = character[key];
@@ -73,9 +68,9 @@ $(document).ready(function () {
                 heroName = hero;
             });
 
-            // 3. Display enemies
-            //      a. enemies remain in selection div && turns red (evil)
-            //      b. setup opponent selection
+            // Display enemies
+            // Enemies remain in selection div && turns red (evil)
+            // Setup opponent selection
             $('#top-text').html('Choose Your <span class="text-danger">Opponent');
             $('.selection').parent()
                 .addClass('char-group-evil');
@@ -85,22 +80,15 @@ $(document).ready(function () {
             $('.hp-badge').addClass('hp-badge-evil');
 
             heroChosen = true;
-            
-        } else if (heroChosen && !villainChosen) {
-            // 4. Stage defenders
-            //      a. Pick opponent if one isn't already chosen AND hero is chosen
-            //      b. Villain moves to Defender
-            //      c. remove all hover effects
-            $('#top-text').html('');
-            $(this).removeClass('char-group')
-                .addClass('char-group-villain');
-            $(this).find('img')
-                .removeClass('evil')
-                .addClass('villain');
-            $(this).prependTo('#villain')
-                .addClass('villain-player');
 
-            //      d. remaining enemies stay at top && shrink
+        } else if (heroChosen && !villainChosen) {
+            // Stage defenders
+            // Pick opponent if one isn't already chosen AND hero is chosen
+
+            var that = this;
+            villainSet(that);
+
+            // Remaining enemies stay at top && shrink
             $('.evil').addClass('dormant')
                 .removeClass('evil');
             $('.dormant').siblings()
@@ -119,14 +107,14 @@ $(document).ready(function () {
 
             villainChosen = true;
 
-            // 5. Display attack button
+            // Display attack button
             $('#btn-fight').removeClass('d-none');
         }
     });
 
-    // 6.  ATTACK
-    //     a. compare attack rating to defender rating
-    //     b. determine damage
+    // ----- ATTACK -----
+    // Compare attack rating to defender rating
+    // Determine damage
     $('#btn-fight').on('click', function (hero, villain) {
         Object.keys(character).forEach(function (key) {
             hero = character[key];
@@ -136,7 +124,7 @@ $(document).ready(function () {
                     + hero.name.toUpperCase()
                     + '</strong>');
 
-                //     c. update Attack results
+                // Update Attack results
                 attackCount++;
                 $('#attack').html('Attacks for <strong>'
                     + hero.attack * attackCount
@@ -144,7 +132,7 @@ $(document).ready(function () {
                 attackProgress = hero.attack * attackCount;
                 heroHP = hero.health;
             }
-
+            // Update counter-attack results
             if (villain.id === villainName) {
                 $('#your-villain').html('<strong>'
                     + villain.name.toUpperCase()
@@ -156,62 +144,103 @@ $(document).ready(function () {
                 villainHP = villain.health;
             }
         });
-        //    d. update HP
+        // Update HP
         heroHP -= counterAttack * attackCount;
         villainHP -= attackProgress * attackCount;
         $('.hp-badge-hero').find('.hp-digit')
             .html(heroHP);
         $('.villain').siblings().find('.hp-digit')
             .html(villainHP);
-        
+
         checkHP();
     });
-    //     e. check HP levels
-    //     f. Update display
+    // Check HP levels
+    // Update display
     function checkHP() {
         if (heroHP <= 0) {
-    //         i. attacker defeated
-    //             a. Game Over
-    //             b. Allow user to reset - display restart button
+            // Attacker defeated
+            // Game Over
+            // Allow user to reset - display restart button
             $('#top-text').html('You have been defeated by ' + villainName.toUpperCase());
 
             restart();
-    
-        } else if (villainHP <=0) {
-    //         ii. defender is defeated
-            enemiesRem--;        
+
+        } else if (villainHP <= 0) {
+            // Defender is defeated -- 1 less enemy remains
+            enemiesRem--;
             if (enemiesRem === 0) {
-                // defeated everyone!
+                // Defeated everyone!!
                 $('#top-text').html('<span class="text-info">You win!</span>');
+                // Allow user to reset - display restart button
 
             } else {
-                // hide attack button
+                // Hide attack button
                 $('#btn-fight').addClass('d-none');
 
                 $('#counter-attack').html('has been defeated');
                 $('#top-text').html('Choose Your Next <span class="text-danger">Opponent');
-    
-    //             a. remove defeated defender
+
+                // Remove defeated defender
                 $('.villain').siblings()
                     .addClass('hp-badge-defeated');
                 $('.villain')
                     .addClass('defeated')
                     .addClass('evil')
                     .removeClass('villain');
-    
-    //             b. allow new enemy selection
+                $('.villain-player').removeClass('char-group-evil');
+
                 chooseNext();
             }
 
         }
     }
+    function villainSet(that) {
+        // Villain moves to Defender
+        // Remove all hover effects
+        $('#top-text').html('');
+        $(that).removeClass('char-group')
+            .addClass('char-group-villain');
+        $(that).find('img')
+            .removeClass('evil')
+            .addClass('villain');
+        $(that).prependTo('#villain')
+            .addClass('villain-player');
+    }
+
     function chooseNext() {
+        // Display opponent choices
         $('#char-wrapper').css('opacity', '1');
         $('.dormant').addClass('evil')
             .removeClass('dormant');
         $('#char-wrapper').find('.hp-badge-evil')
-            .css({'top': '30px', 'right': '10px'});
+            .css({ 'top': '30px', 'right': '10px' });
 
+        // Select new opponent
+        $('.char-group-evil').on('click', function (villain) {
+            // Create graveyard div && move defeated villain inside
+            $('#char-wrapper').prepend('<div id="graveyard"></div>');
+            $('.villain-player').prependTo('#graveyard')
+                .removeClass('villain-player');
+
+            var that = this;
+            villainSet(that);
+
+            // Store Villain info
+            villain = $(this).attr('id');
+            Object.keys(character).forEach(function (key) {
+                var value = character[key];
+                if (value.id === villain) {
+                    $('#your-villain').html('Your opponent is<br><strong>' + value.name + '</strong>');
+                    $('#counter-attack').html('');
+                }
+                villainName = villain;
+            });
+
+            villainChosen = true;
+
+            // Display attack button
+            $('#btn-fight').removeClass('d-none');
+        });
     }
 
     function restart() {

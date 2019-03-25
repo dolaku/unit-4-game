@@ -26,7 +26,7 @@ body {
 .selection:hover {
     background-color: #daffff;
     box-shadow: inset 0 0 30px #afeeee;
-    margin: 0px 15px; 
+    margin: 0px 15px;
     max-height: 210px;
     transition: .2s;
 }
@@ -42,7 +42,7 @@ body {
 .evil:hover {
     background-color: #ffc4d8;
     box-shadow: inset 0 0 30px #d87093;
-    margin: 0px 15px; 
+    margin: 0px 15px;
     max-height: 210px;
 }
 .evil:active {
@@ -143,7 +143,7 @@ body {
     font-size: 1.4rem;
     height: 105px;
     margin-top: 2px;
-    margin-bottom: 3px;
+    margin-bottom: -5px;
     text-shadow: 1px 2px 1px #333;
     transition: .05s;
     transition-timing-function: ease-in-out;
