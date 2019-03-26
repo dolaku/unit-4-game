@@ -81,9 +81,10 @@ $(document).ready(function () {
 
             heroChosen = true;
 
-        } else if (heroChosen && !villainChosen) {
+        } else if (heroChosen && !villainChosen && enemiesRem === 3) {
             // Stage defenders
             // Pick opponent if one isn't already chosen AND hero is chosen
+            console.log('vil not picked yet ' + villainChosen);
 
             var that = this;
             villainSet(that);
@@ -100,7 +101,7 @@ $(document).ready(function () {
             });
 
             villainChosen = true;
-
+            console.log('vil picked ' + villainChosen);
             // Display attack button
             $('#btn-fight').removeClass('d-none');
         }
@@ -156,31 +157,39 @@ $(document).ready(function () {
         if (heroHP <= 0) {
             // Attacker defeated
             // Game Over && restart option
-            $('#top-text').html('You have been defeated by ' + villainName.toUpperCase());
+            $('#btn-fight').html('<div class="villain-notes">You have been defeated by ' + villainName.toUpperCase() + '</div>');
 
             restart();
 
         } else if (villainHP <= 0) {
+            villainChosen = false;
             // Defender is defeated -- 1 less enemy remains
             enemiesRem--;
             if (enemiesRem === 0) {
                 // Defeated everyone!!
                 $('#top-text').html('<span class="text-info">You win!</span>');
-                removeDefeated()
+                removeDefeated();
+                graveyard();
 
                 restart();
 
 
-
+                // If there are still enemies remaining to fight
             } else {
+
+                console.log('vil dies ' + villainChosen);
+                console.log('opps remaining ' + enemiesRem);
+
+
                 // Hide attack button
                 $('#btn-fight').addClass('d-none');
-
+                // Update user display
                 $('#counter-attack').html('has been defeated');
                 $('#top-text').html('Choose Your Next <span class="text-danger">Opponent');
 
+                // Replace all villain classes with defeated classes
+                // Allow new selection
                 removeDefeated()
-
                 chooseNext();
             }
         }
@@ -189,7 +198,7 @@ $(document).ready(function () {
     function villainSet(that) {
         // Villain moves to Defender
         // Remove all hover effects
-        $('#top-text').html('');
+        $('#top-text').empty();
         $(that).removeClass('char-group')
             .addClass('char-group-villain');
         $(that).find('img')
@@ -202,7 +211,7 @@ $(document).ready(function () {
     function dormantSet() {
         // Remaining enemies stay at top && shrink
         $('.evil').addClass('dormant')
-        .removeClass('evil');
+            .removeClass('evil');
         $('.dormant').siblings()
             .css({ 'top': '-20%', 'right': '30%' });
         $('#char-wrapper').removeClass('mb-auto')
@@ -217,47 +226,57 @@ $(document).ready(function () {
         $('#char-wrapper').find('.hp-badge-evil')
             .css({ 'top': '30px', 'right': '10px' });
 
+        console.log('click listener before choosing Villain ' + villainChosen);
+        console.log('before choosing villain:')
+        console.log('num enemies left: ' + enemiesRem)
         // Select new opponent
         $('.char-group-evil').on('click', function (villain) {
-            // Create graveyard div && move defeated villain inside
-            $('#char-wrapper').prepend('<div id="graveyard"></div>');
-            $('.villain-player').prependTo('#graveyard')
-                .removeClass('villain-player');
-            $('.defeated').siblings().find('.hp-digit')
-                .html('X');
+            if (!villainChosen) {
+                // Create graveyard div && move defeated villain inside
+                graveyard();
 
-            var that = this;
-            villainSet(that);
+                var that = this;
+                villainSet(that);
+                dormantSet()
 
-            // Store new Villain info
-            // Reset villainHP
-            villain = $(this).attr('id');
-            Object.keys(character).forEach(function (key) {
-                var value = character[key];
-                if (value.id === villain) {
-                    $('#your-villain').html('Your opponent is<br><strong>' + value.name + '</strong>');
-                    $('#counter-attack').html('');
-                    villainHP = value.health;
-                }
-            });
+                // Store new Villain info
+                // Reset villainHP
+                villain = $(this).attr('id');
+                Object.keys(character).forEach(function (key) {
+                    var value = character[key];
+                    if (value.id === villain) {
+                        $('#your-villain').html('Your opponent is<br><strong>' + value.name + '</strong>');
+                        $('#counter-attack').empty();
+                        villainHP = value.health;
+                    }
+                });
 
-            villainName = villain;
-            villainChosen = true;
+                villainName = villain;
+                villainChosen = true;
 
-            // Display attack button
-            $('#btn-fight').removeClass('d-none');
+                // Display attack button
+                $('#btn-fight').removeClass('d-none');
+            }
         });
     } // End ----- chooseNext()
 
     function removeDefeated() {
         // Remove defeated defender
+        $('.villain-player').removeClass('char-group-evil');
         $('.villain').siblings()
             .addClass('hp-badge-defeated');
         $('.villain')
             .addClass('defeated')
             .addClass('evil')
             .removeClass('villain');
-        $('.villain-player').removeClass('char-group-evil');
+    }
+
+    function graveyard() {
+        $('#char-wrapper').prepend('<div id="graveyard"></div>');
+        $('.villain-player').prependTo('#graveyard')
+            .removeClass('villain-player');
+        $('.defeated').siblings().find('.hp-digit')
+            .html('X');
     }
 
     function restart() {
