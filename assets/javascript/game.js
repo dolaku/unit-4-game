@@ -174,6 +174,9 @@ $(document).ready(function () {
             enemiesRem--;
             if (enemiesRem === 0) {
                 // WIN!! Defeated everyone!!
+                $('#top-text').html('Champion!')
+                    .addClass('mb-5')
+                    .css('color', '#209191');
                 $('#attack').html('is undefeated!!');
                 $('.villain-notes').empty();
                 removeDefeated();
