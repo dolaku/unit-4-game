@@ -84,7 +84,6 @@ $(document).ready(function () {
         } else if (heroChosen && !villainChosen && enemiesRem === 3) {
             // Stage defenders
             // Pick opponent if one isn't already chosen AND hero is chosen
-            console.log('vil not picked yet ' + villainChosen);
 
             var that = this;
             villainSet(that);
@@ -101,7 +100,7 @@ $(document).ready(function () {
             });
 
             villainChosen = true;
-            console.log('vil picked ' + villainChosen);
+
             // Display attack button
             $('#btn-fight').removeClass('d-none');
         }
@@ -155,34 +154,40 @@ $(document).ready(function () {
     // Update display
     function checkHP() {
         if (heroHP <= 0) {
-            // Attacker defeated
+            // LOSE!!
             // Game Over && restart option
             $('#btn-fight').html('<div class="villain-notes">You have been defeated by ' + villainName.toUpperCase() + '</div>');
+
+            // Hide attack button
+            $('#btn-fight').addClass('d-none');
 
             restart();
 
         } else if (villainHP <= 0) {
+            // Defeated a villain
             villainChosen = false;
+
+            // Hide attack button
+            $('#btn-fight').addClass('d-none');
+
             // Defender is defeated -- 1 less enemy remains
             enemiesRem--;
             if (enemiesRem === 0) {
-                // Defeated everyone!!
-                $('#top-text').html('<span class="text-info">You win!</span>');
+                // WIN!! Defeated everyone!!
+                $('#attack').html('is undefeated!!');
+                $('.villain-notes').empty();
                 removeDefeated();
+
+
+                //add delay here
                 graveyard();
+                //
 
                 restart();
 
 
                 // If there are still enemies remaining to fight
             } else {
-
-                console.log('vil dies ' + villainChosen);
-                console.log('opps remaining ' + enemiesRem);
-
-
-                // Hide attack button
-                $('#btn-fight').addClass('d-none');
                 // Update user display
                 $('#counter-attack').html('has been defeated');
                 $('#top-text').html('Choose Your Next <span class="text-danger">Opponent');
@@ -226,12 +231,9 @@ $(document).ready(function () {
         $('#char-wrapper').find('.hp-badge-evil')
             .css({ 'top': '30px', 'right': '10px' });
 
-        console.log('click listener before choosing Villain ' + villainChosen);
-        console.log('before choosing villain:')
-        console.log('num enemies left: ' + enemiesRem)
         // Select new opponent
         $('.char-group-evil').on('click', function (villain) {
-            if (!villainChosen) {
+            if (!villainChosen && enemiesRem > 0) {
                 // Create graveyard div && move defeated villain inside
                 graveyard();
 
@@ -262,7 +264,8 @@ $(document).ready(function () {
 
     function removeDefeated() {
         // Remove defeated defender
-        $('.villain-player').removeClass('char-group-evil');
+        $('.villain-player').unbind('click')
+            .removeClass('char-group-evil');
         $('.villain').siblings()
             .addClass('hp-badge-defeated');
         $('.villain')
@@ -275,8 +278,9 @@ $(document).ready(function () {
         $('#char-wrapper').prepend('<div id="graveyard"></div>');
         $('.villain-player').prependTo('#graveyard')
             .removeClass('villain-player');
-        $('.defeated').siblings().find('.hp-digit')
-            .html('X');
+        $('.defeated').siblings()
+            .css({ 'top': '-20%', 'right': '30%' })
+            .find('.hp-digit').html('X');
     }
 
     function restart() {
