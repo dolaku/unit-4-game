@@ -4,6 +4,4 @@ A simple RPG built with jquery. Select your character and your opponents. Battle
 
 https://dolaku.github.io/unit-4-game/
 
-
-
 ![Food Fight!](./assets/images/game.png)
