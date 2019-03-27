@@ -1,5 +1,19 @@
 $(document).ready(function () {
-    var gameStart = false;
+
+/* ------ KNOWN BUGS ------
+- Attacks and counterattack math is incorrect
+    - hero attack is the sum of the current round and previous round 
+        (hero becomes extremely overpowered)
+    - counterattack is correct until an opponent swap
+
+- Restart button
+    - missing some resets on class additions/removals
+    - need to link click listeners to allow choosing new opponent
+
+
+
+*/
+
     var heroChosen = false;
     var villainChosen = false;
     var heroName;
@@ -8,7 +22,7 @@ $(document).ready(function () {
     var villainName;
     var villainHP;
     var attackCount = 0;
-    var attackProgress;
+    var attackProgress = 0;
     var counterAttack;
 
     var character = {
@@ -120,10 +134,10 @@ $(document).ready(function () {
 
                 // Update Attack results
                 attackCount++;
-                $('#attack').html('Attacks for <strong>'
-                    + hero.attack * attackCount
-                    + '</strong> damage!');
                 attackProgress = hero.attack * attackCount;
+                $('#attack').html('Attacks for <strong>'
+                    + attackProgress
+                    + '</strong> damage!');
                 heroHP = hero.health;
             }
             // Update counter-attack results
@@ -139,13 +153,22 @@ $(document).ready(function () {
             }
         });
 
+        console.log(heroHP + ' heroHP');
+        console.log(villainHP + ' villainHP');
+        console.log(counterAttack + ' counter');
+        console.log(attackProgress + ' attack progress');
+
         // Update HP
-        heroHP -= counterAttack * attackCount;
+        heroHP -= (counterAttack * attackCount);
         villainHP -= attackProgress * attackCount;
         $('.hp-badge-hero').find('.hp-digit')
             .html(heroHP);
         $('.villain').siblings().find('.hp-digit')
             .html(villainHP);
+
+        console.log(heroHP + ' displayed hero HP');
+        console.log(villainHP + ' displayed villain HP');
+        console.log('----------')
 
         checkHP();
     }); // End ----- #btn-fight 'click'
@@ -181,13 +204,8 @@ $(document).ready(function () {
                 $('.villain-notes').empty();
                 removeDefeated();
 
-
-                //add delay here
                 graveyard();
-                //
-
                 restart();
-
 
                 // If there are still enemies remaining to fight
             } else {
@@ -287,6 +305,57 @@ $(document).ready(function () {
     }
 
     function restart() {
-        // $('#top-text').html('Restart?');
+        $('#hero').addClass('flex-column').append('<div id="reset" class="rounded-circle m-2 pt-2">Play Again?</div>');
+
+        $('#reset').on('click', function () {
+            $('#reset').addClass('d-none');
+
+            $('.hero-notes').empty();
+            $('.villain-notes').empty();
+            $('#top-text').html('Choose Your <span class="text-info">Character</span>').css('color', 'unset');
+
+            $('.char-group-villain').addClass('char-group')
+                .removeClass('char-group-villain');
+
+            $('.char-group').appendTo('#char-wrapper');
+            $('#char-wrapper').css('opacity','1');
+
+            $('.character').addClass('selection')
+                .removeClass('defeated')
+                .removeClass('dormant')
+                .removeClass('evil');
+
+            $('.hp-badge').removeClass('hp-badge-evil')
+                .removeClass('hp-badge-defeated')
+                .css({'top': '40px', 'right': '21px'});
+
+            $('#hero').removeClass('flex-column');
+
+            $('.hero-player').appendTo('#char-wrapper').addClass('char-group')
+                .removeClass('char-group-hero')
+                .removeClass('hero-player');
+
+            $('#graveyard').remove();
+            $('#defeated').remove();
+
+            Object.keys(character).forEach(function (key) {
+                var value = character[key];
+                if (value.id === 'iceCream') {
+                    $('#iceCream').find('.hp-digit').html(value.health);
+                } else if (value.id === 'apple') {
+                    $('#apple').find('.hp-digit').html(value.health);
+                } else if (value.id === 'burger') {
+                    $('#burger').find('.hp-digit').html(value.health);
+                } else if (value.id === 'avocado') {
+                    $('#avocado').find('.hp-digit').html(value.health);
+                }
+            });
+
+            heroChosen = false;
+            villainChosen = false;
+            enemiesRem = 3;
+            attackCount = 0;
+            attackProgress = 0;
+        });
     }
 });

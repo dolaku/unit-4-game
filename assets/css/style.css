@@ -114,7 +114,8 @@ body {
     font-size: 2rem;
     line-height: 1.2;
 }
-#btn-fight {
+#btn-fight,
+#reset {
     background-color: #209191;
     border: solid 5px #43b3b3;
     box-shadow: 0 0 15px #43b3b3;
